@@ -13,53 +13,22 @@ using namespace std;
 class Solution {
 public:
     
-    void InsertLeft(int mid,TreeNode* root, vector<int>& nums)
-    {
-        for(int i=mid-2;i>=0;i--)
-        {
-            while (root!=NULL)
-            {
-                if (nums[i] > root->val)
-                    root = root->right;
-                else
-                    root = root->left;
-            }
-            TreeNode* temp;
-            temp->val = nums[i];
-            root = temp;
-        }
+    TreeNode* ConvertArrayToTree(vector<int>& nums,int left,int right)
+{
+    if (left > right)
+        return NULL;
+    int midpoint = left + (right-left)/2;
+    TreeNode* node = new TreeNode(nums[midpoint]);
+    node->left = ConvertArrayToTree(nums,left,midpoint-1);
+    node->right = ConvertArrayToTree(nums,midpoint+1,right);
+    return node;
     }
-    void InsertRight(int mid,TreeNode* root, vector<int>& nums)
-    {
-        for(int i=mid+2;i<nums.size();i++)
-        {
-            while (root!=NULL)
-            {
-                if (nums[i] > root->val)
-                    root = root->right;
-                else
-                    root = root->left;
-            }
-            TreeNode* temp;
-            temp->val = nums[i];
-            root = temp;
-        }
-    }
+
+    
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        int mid = nums.size()/2;
-        cout<<mid<<endl;
-        cout<<nums[mid]<<endl;
-        TreeNode* root;
-        root->val = nums[mid];
-        TreeNode* temp;
-        temp->val = nums[mid-1];
-        root->left = temp;
-        TreeNode* temp2;
-        temp2->val = nums[mid+1];
-        root->right = temp2;
-        InsertLeft(mid,root->left,nums);
-        InsertRight(mid,root->right,nums);
-        return root;
-        
+        if (nums.size() == 0)
+            return NULL;
+         
+        return ConvertArrayToTree(nums,0,nums.size()-1);       
     }
-};
+    };
