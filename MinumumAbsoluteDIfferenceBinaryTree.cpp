@@ -13,29 +13,41 @@ using namespace std;
 class Solution {
 public:
     int min;
-    int count=0;
-    void TraverseAndCalculate(TreeNode* root,int numPred)
+    int flag=0;
+    void Traverse(TreeNode* root,TreeNode* top)
     {
         if (root == NULL)
             return;
-        if (numPred != root->val)
+        TraverseAndCalculate(top,root);
+        Traverse(root->left,top);
+        Traverse(root->right,top);
+    }
+    void TraverseAndCalculate(TreeNode* root,TreeNode* curr)
+    {
+        if (root == NULL)
+            return;
+        if (root!=curr)
         {
-        if (count == 1)
-        {
-            min = abs(root->val-numPred);
-            count++;
+            if (flag == 0)
+            {
+                //cout<<min<<endl;
+                min = abs(root->val - curr->val);
+                flag=1;
+            }
+            else
+            {
+                //cout<<min<<endl;
+                //cout<<abs(root->val - curr->val)<<endl;
+                //cout<<endl;
+                if (min > abs(root->val - curr->val))
+                    min = abs(root->val - curr->val);
+            }
         }
-        else if (abs(root->val-numPred) < min)
-            min = abs(root->val-numPred);    
-        }
-        else
-            count++;
-        TraverseAndCalculate(root->left,root->val);
-        TraverseAndCalculate(root->right,root->val);
+        TraverseAndCalculate(root->left,curr);
+        TraverseAndCalculate(root->right,curr);
     }
     int getMinimumDifference(TreeNode* root) {
-        min = root->val;
-        TraverseAndCalculate(root,root->val);
+        Traverse(root,root);
         return min;
         
     }
