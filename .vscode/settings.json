@@ -5,6 +5,11 @@
         "string_view": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "hash_map": "cpp",
+        "bitset": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "regex": "cpp"
     }
 }
