@@ -12,25 +12,27 @@ using namespace std;
 
 class Solution {
 public:
+    int max = INT_MIN,num;
     void Traverse(TreeNode* root)
     {
-        if (root == NULL)
+        if (root==NULL)
             return;
-        Calculate(root);
+        num = Calculate(root->left)+Calculate(root->right);
+        if (num > max)
+            max=num;
         Traverse(root->left);
         Traverse(root->right);
-        
     }
     int Calculate(TreeNode* root)
     {
-        int left=0;right=0;
+        int left=0,right=0;
         if (root == NULL)
             return 0;
         else
         {
             
-            left= 1+Traverse(root->left);
-            right=1+Traverse(root->right);
+            left= 1+Calculate(root->left);
+            right=1+Calculate(root->right);
             
         }
         if (left > right)
@@ -39,6 +41,7 @@ public:
          return right;
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        
+        Traverse(root);
+        return max;
     }
 };
