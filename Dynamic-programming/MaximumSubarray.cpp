@@ -1,13 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
+
+
 class Solution {
 public:
     
-    int MaxSubArray(int **data,int **flag,vector<int>& nums,int i,int j)
+    int MaxSubArray(vector<vector<int>>& data,vector<vector<int>>& flag,vector<int>& nums,int i,int j)
     {
-        if (i > j || i==(nums.size()-1) || j >=(nums.size()))
-            return 0;
-        int x=i,sum1=0;
+        int sum1=0;
+        if (i==j)
+            sum1=data[i][j];
+        else if (i > j || i==(nums.size()-1) || j >=(nums.size()))
+            return INT_MIN;
+        int x=i;
         while (true)
         {
             if (x > j)
@@ -38,11 +43,11 @@ public:
     
     
     int maxSubArray(vector<int>& nums) {
-        int data[nums.size()][nums.size()];
-        int flag[nums.size()][nums.size()];
-        memset(flag,0,sizeof(flag));
-        
-        
+        vector<vector<int>> data(nums.size(),vector<int> (nums.size()));
+        vector<vector<int>> flag(nums.size(),vector<int> (nums.size(),0));
+        if (nums.size()==1)
+            return nums[0];
         return  MaxSubArray(data,flag,nums,0,0);
+        
     }
 };
